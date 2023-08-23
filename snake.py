@@ -39,14 +39,16 @@ class Snake:
         self.board.set_scoreboard("Hearts: %d" % (self.score))
 
     def input(self, key: int):
+        # Handle the moves and make sure you can't move backwards
+        # and run in to yourself
         match key:
-            case curses.KEY_UP:
+            case curses.KEY_UP if self.direction != Direction.DOWN:
                 self.direction = Direction.UP
-            case curses.KEY_DOWN:
+            case curses.KEY_DOWN if self.direction != Direction.UP:
                 self.direction = Direction.DOWN
-            case curses.KEY_LEFT:
+            case curses.KEY_LEFT if self.direction != Direction.RIGHT:
                 self.direction = Direction.LEFT
-            case curses.KEY_RIGHT:
+            case curses.KEY_RIGHT if self.direction != Direction.LEFT:
                 self.direction = Direction.RIGHT
 
     def update(self, delta: float):
